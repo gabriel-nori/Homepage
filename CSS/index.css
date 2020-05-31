@@ -1,0 +1,87 @@
+@import url("./courier.css");
+@import url("./all.css");
+
+*{
+	padding: 0;
+}
+
+#menuNav{
+
+}
+
+#menuNav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+}
+
+#menuNav li a {
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+/* Change the link color on hover */
+#menuNav li a:hover {
+	background-color: #555;
+	color: white;
+}
+
+@media only screen and (min-width: 1000px){
+	#main{
+		position: absolute;
+		top: 0;
+		left: 20px;
+		right: 0;
+		bottom: 0;
+		background-color: #000;
+	}
+
+	#menuOpener{
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 20px;
+		background-color: brown;
+	}
+
+	#menuBar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 200px;
+		z-index: 4;
+		max-width: 50%;
+		transform: translateX(-100%);
+		background-color: #FFF;
+		box-shadow: #000, 5px;
+	}
+}
+
+@media only screen and (max-width: 999px){
+	#main{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 0;
+		background-color: black;
+	}
+
+	#menuBar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 200px;
+		max-width: 50%;
+		transform: translateX(-100%);
+		background-color: blue;
+	}
+}

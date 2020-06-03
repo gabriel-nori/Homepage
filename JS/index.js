@@ -5,28 +5,44 @@ var
 	projectsSelector,
 	technologiesSelector,
 	experienceSelector,
-	wardsSelector,
+	awardsSelector,
 	skillsSelector,
 	contactSelector,
-	menuNav;
+	menuNav,
+	loaderWrapper,
+	language,
+	supportedLanguages = ['english', 'spanish', 'portuguese'];
 	
 function loaded(){
-	console.log("yup");
 	//Start all the objects on the page:
+	about = document.getElementsByClassName("about");
 	menuOpener = document.getElementById("menuOpener");
 	menuBar = document.getElementById("menuBar");
 	aboutMeSelector = document.getElementById("aboutMeSelector");
 	projectsSelector = document.getElementById("projectsSelector");
 	technologiesSelector = document.getElementById("technologiesSelector");
 	experienceSelector = document.getElementById("experienceSelector");
-	wardsSelector = document.getElementById("wardsSelector");
+	awardsSelector = document.getElementById("awardsSelector");
 	skillsSelector = document.getElementById("skillsSelector");
 	contactSelector = document.getElementById("contactSelector");
 	menuNav = document.getElementById("menuNav");
+	loaderWrapper = document.getElementById("loaderWrapper");
 	//Now that we have all the objects set, let's set the actions:
 	menuOpener.onmouseover = openMenu;
 	menuBar.onmouseleave = closeMenu;
 	menuNav.onclick = closeMenu;
+	//Now, let's see if the language is in the supported list and then set it:
+	language = getUrlParam('language','portuguese');
+	console.log(`site language is set to ${language}`);
+	if(!supportedLanguages.includes(language)){
+		language = 'english';
+	}
+	console.log("setting the site language")
+	setLanguage(language);
+	//setTimeout(dropLoader, 10000);
+	console.log("dropping the loader");
+	dropLoader();
+	console.log("if you're trying to access the console to fuck this page up, you should know that there's no need to, I already did it myself...")
 }
 
 function openMenu(){
@@ -35,6 +51,65 @@ function openMenu(){
 		//menuBurger.style.background = "url(\"../Media/Icons/Menu/Opened/menu_open-black-18dp/2x/baseline_menu_open_black_18dp.png\")";
 	}
 }
+
 function closeMenu(){
 	menuBar.className = "slide-out";
 }
+
+function getUrlParam(parameter, defaultvalue){
+    var urlparameter = defaultvalue;
+    if(window.location.href.indexOf(parameter) > -1){
+        urlparameter = getUrlVars()[parameter];
+    }
+    return urlparameter;
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+function setLanguage(language){
+	var keys, setLanguage;
+	if(languageFile){
+		setLanguage = languageFile[language];
+		keys = Object.keys(setLanguage);
+		var toSet;
+		for(toSet in keys){
+			document.getElementById(keys[toSet]).innerHTML = setLanguage[keys[toSet]];
+		}
+	}
+}
+
+function dropLoader(){
+	loaderWrapper.style.display = "none";
+}
+
+function createLoader(){
+	loaderWrapper.style.display = "block";
+}
+
+function setCoockie(name, value){
+	document.cookie = `${name}= ${value};`;
+}
+
+function getCookie(name) {
+	var 
+		coockie = document.cookie,
+		startPosition = coockie.indexOf(name),
+		endPosition = coockie.indexOf(";", startPosition),
+		val = "";
+	
+	if(startPosition != -1){
+		if(endPosition != -1){
+			val = coockie.slice(startPosition, endPosition);
+		}
+		else{
+			val = coockie.slice(startPosition);
+		}
+	}
+	return val;
+  }

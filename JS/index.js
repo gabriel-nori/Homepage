@@ -92,16 +92,16 @@ function createLoader(){
 	loaderWrapper.style.display = "block";
 }
 
-function setCoockie(name, value){
+function setCookie(name, value){
 	document.cookie = `${name}= ${value};`;
 }
 
 function getCookie(name) {
 	var 
 		coockie = document.cookie,
-		startPosition = coockie.indexOf(name),
+		startPosition = coockie.indexOf(name + "="),
 		endPosition = coockie.indexOf(";", startPosition),
-		val = "";
+		val = null;
 	
 	if(startPosition != -1){
 		if(endPosition != -1){
@@ -110,6 +110,21 @@ function getCookie(name) {
 		else{
 			val = coockie.slice(startPosition);
 		}
+		val = val.slice(val.indexOf("=")+1);
 	}
 	return val;
-  }
+}
+
+function clearCookies(){
+	var 
+		cookies = document.cookie.replace(" ", "").split(";"),
+		x;
+	for(x in cookies){
+		delCookie(cookies[x]);
+	}
+	console.log(cookies);
+}
+
+function delCookie(name){
+	setCookie(name, "");
+}
